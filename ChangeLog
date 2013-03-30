@@ -1,0 +1,181 @@
+### 0.7.0
+- iyell daemon is now called iyelld
+- the new iyell binary is actually a client (UDP and Unix)
+- build cleaning
+- some small bug fixes (mostly typos)
+
+### 0.6.8
+- use correct SI / IEC prefixes for sizes
+
+### 0.6.7
+- added server password setting: pass
+
+### 0.6.6
+- OpenBSD build fix
+- FreeBSD warning fixes
+- code cleaning
+
+### 0.6.5
+- added color switch to enable/remove bold/colors
+	- on syslog, colorise brackets with severity
+- fixed "starting unix listener" typo 
+- removed bold brackets in quotes (avoid stranges issues with +c channels)
+- fixed quotes help features typos
+- "syslog message from..." only displayed in verbose mode
+
+### 0.6.4
+- fixed SEGV on DNS resolution error
+
+### 0.6.3
+- shutdown fixes (SIGTERM), faster shutdown.
+- quotes:
+	- added 'like' function
+	- reworked search results
+	- added global (-g)/multi channels mode (default) 
+
+### 0.6.2
+- quotes:
+	- fixed "quotes del" output error
+- fixed core bug: don't try to write() to IRC if data from hook is invalid
+
+### 0.6.1
+- fixed "error while validating timestamp: Success" messages
+- quotes:
+	- quotes with a leading '+' character are ACTION (/me) on random
+	- now display deleted quotes
+
+### 0.6.0
+- new: syslog listener
+	- it works like the classic listener, exept it understand syslog
+	- rfc3164
+- fixed reconnection where the DNS resolution fail
+- fixed fd "drift" whith IRC connexion (happened with bad network connections)
+- fixed throttled output + shutdown assert
+- fixed some VERBOSE messages which were not logged in daemon mode
+- all I/O are now only visible with debug mode
+
+### 0.5.2
+- now print quote id after "quote add" (quotes hook)
+- quotes:
+	- flag -s try to strip the nick from the answer if possible
+- fixed channel ban logging
+
+### 0.5.1
+- reimplemented direct recipient (allow_direct setting)
+	- type should be prefixed with '='
+- sync message is now NOTICE instead of PRIVMSG
+
+### 0.5.0
+- not so much features, but protocol changes
+	- now looks like: type:timestamp:message
+	- a comparaison between host and client timestamp is done
+	- default offset allowed is 900 seconds
+	- added [global] offset setting 
+- code cleaning (rcptto + rpccmd removed)
+
+
+### 0.4.3
+- fixed a bug with RAW messages from hooks
+- quotes:
+	- random every x seconds, command interval.
+
+### 0.4.2
+- replaced the bugged fifo socket by a real unix socket
+	- you can use socat as client
+
+### 0.4.1
+- bot core now strip correctly a nick from nick!user@host from a hook
+- fixed a regression with privates commands
+- quotes hook, it'an optional C hook based on sqlite which may help you storing quotes !
+
+### 0.4.0
+- timestamp command improvment
+- configuration management fully rewrited
+	- now use an ini file
+- hooks implementation
+	- oneshot commands
+	- piped stuff (ala inetd)
+- sighup & co fully rewrited
+
+### 0.3.7
+- added live command: timestamp
+
+### 0.3.6
+- irc output throttling (avoid excess flood)
+
+### 0.3.5
+- fixed a read+write event bug
+- SSL code partial rewrite
+- reconnection code rewrited
+- better SSL errors management
+
+### 0.3.4
+- reconnection fixes
+- enable message repeating between bot(s) (repeat_ settings)
+- faster shutdown
+
+### 0.3.3
+- VERBOSE mode switching with SIGUSR1
+- bitlbee base compatibility (use irc_bitlbee = yes)
+- enable messages to direct recipient with magic RCPTTO
+- fixed IPv6 binding on Linux
+
+### 0.3.2
+- fixed double free() with SIGHUP + SIGTERM
+- removed dependances to lm
+
+### 0.3.1
+- fixed uptime display
+- iyell can now be invited in one channel (this channel need to be configured)
+- warning if wrong key / no key set for a specific channel
+- kick management
+	- fixed a bug with rejoin if the channel had a key
+
+### 0.3.0
+- internal stats
+- live commands (uptime, stats, ping)
+- internal system configuration rewrited (chained list -> hash table)
+
+### 0.2.5
+- fifo socket (need work, bug with fifo)
+
+### 0.2.4
+- all buffers rewrited with libevent
+- changin bot nick in configuration + SIGHUP result in /nick <newnick>
+
+### 0.2.3
+- warning if run as root
+- can now set realname
+
+### 0.2.2
+- messages can now be forwarded to multiples channels / users
+- added perform (messages send after connexion)
+	- perform can be anything that conform to the IRC RFC.
+- solaris port
+
+### 0.2.1
+- syslog logging (use syslog = yes or syslog = no in configuration)
+- updataded usage() to reflect the possibility of long options
+
+### 0.2.0
+- migration to libevent for polling and timers completed
+- IPv6 compatible
+- code cleaning
+
+### 0.1.3 -> 0.1.9
+- libevent migration
+- gethostbyname() -> getaddrinfo()
+
+### 0.1.2
+- kick & ban management
+	- now rejoin a channel after being kicked
+	- now rejoin a channel after being banned
+- sync message on join
+
+### 0.1.1
+- nick used management
+	- choose a different nick for connecting 
+	- try to regain the nick while connected 
+
+### 0.1.0
+- Initial version, can connect, forward messages

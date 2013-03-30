@@ -1,0 +1,7 @@
+dependancies:
+
+- libevent:	1.3.0 or greater (1.4.0 or greater recommended)
+- openssl:	0.9.8a or greater
+- liblua:	5.1 or greater (optional)
+- sqlite3	3.0 or greater (optional) (3.4.0 or greater recommended)
+
