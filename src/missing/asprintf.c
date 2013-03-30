@@ -3,7 +3,7 @@
  *  
  *
  *  Created by Michel DEPEIGE on 01/04/08.
- *  2008 lostwave.net.
+ *  2013 lostwave.net.
  *  This code can be used under the BSD license.
  *
  */

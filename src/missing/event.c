@@ -1,9 +1,9 @@
 /*
- *  asprintf.c
+ *  event.c
  *  
  *
  *  Created by Michel DEPEIGE on 29/05/2009.
- *  2008 lostwave.net.
+ *  2013 lostwave.net.
  *  This code can be used under the BSD license.
  *
  */
