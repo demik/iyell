@@ -341,7 +341,7 @@ void	cmd_timestamp(struct evbuffer *out, int argc, char **argv, char *who, char 
 	if (where != NULL)
 		len = snprintf(output, BUFF_SIZE, "%s: ", get_nick_from_mask(who));
 
-	if (len == BUFF_SIZE || len < 0)
+	if (len >= BUFF_SIZE || len < 0)
 		return ;
 	val = strtol(argv[1], &endptr, 10);
 	

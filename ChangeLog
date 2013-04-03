@@ -1,3 +1,8 @@
+### 0.7.2
+
+### 0.7.1
+- fixed an error that could trigger SEGV in cmd_check_irc_msg()
+
 ### 0.7.0
 - iyell daemon is now called iyelld
 - the new iyell binary is actually a client (UDP and Unix)
