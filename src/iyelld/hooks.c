@@ -650,7 +650,7 @@ void	hooks_pipe_error(struct bufferevent *ev, short what, void *arg)
 }
 
 /*
- * serach if a specific hook is launched
+ * search if a specific hook is launched
  * 
  * return valued:
  * - a pointer to a hook_s struct if something is found
