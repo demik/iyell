@@ -103,14 +103,14 @@ void	handler_debug(int sig)
 }
 
 /*
- * switch VERBOSE mode on / off 
+ * switch VERBOSE mode on / off
  */
 
 void	handler_verbose(int sig)
 {
 	sig = 0;
 
-	if (g_mode & VERBOSE) { 
+	if (g_mode & VERBOSE) {
 		g_mode &= VERBOSE;
 		log_msg("[s] disabling verbose mode");
 	}
@@ -128,7 +128,7 @@ void	handler_shutdown(int sig)
 {
 	if (g_mode & VERBOSE)
 		log_msg("[s] got signal %i, going shutdown now\n", sig);
-	
+
 	g_mode |= SHUTDOWN;
 
 	/* remove SIGHUP handler when shuting down */
@@ -149,7 +149,7 @@ void	handler_shutdown(int sig)
 }
 
 /*
- * on SIGCHLD, log information about the child process 
+ * on SIGCHLD, log information about the child process
  */
 
 void	sigchld_handler(int sig)

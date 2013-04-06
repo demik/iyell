@@ -73,7 +73,7 @@ hash_t * hash_new(unsigned int capacity) {
 
     capacity /= load_factor;
 
-    for (i=0; i < sizes_count; i++) 
+    for (i=0; i < sizes_count; i++)
         if (sizes[i] > capacity) { sind = i; break; }
 
     if ((h = malloc(sizeof(struct hash_s))) == NULL) return NULL;
@@ -176,7 +176,7 @@ void * hash_remove(hash_t *h, const char *key)
         off++;
 	ind = (code + (off * off)) % size;
     }
- 
+
     return NULL;
 }
 

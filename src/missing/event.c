@@ -1,6 +1,6 @@
 /*
  *  event.c
- *  
+ *
  *
  *  Created by Michel DEPEIGE on 29/05/2009.
  *  2013 lostwave.net.

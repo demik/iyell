@@ -29,7 +29,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
-#include "conf.h"	
+#include "conf.h"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
@@ -69,7 +69,7 @@ int	conf_ini_read(FILE *f, conf_t *conf)
 
 		switch (section) {
 			case SEC_GLOBAL: {
-				conf_ini_check_parameter(tmp, conf->global, line);	
+				conf_ini_check_parameter(tmp, conf->global, line);
 				break;
 			}
 			case SEC_CMD: {
@@ -129,7 +129,7 @@ void	conf_ini_check_parameter(char *str, hash_t *mem, int line)
 	for (i = 0; i < (MAX_TOKENS - 1); i++, str = NULL) {
 		#ifdef HAVE_STRTOK_R
 		token = strtok_r(str, "=\t\r,\n", &saveptr);
-		#else           
+		#else
 		token = strtok(str, "=\t\r,\n");
 		#endif
 		if (token == NULL)
@@ -160,7 +160,7 @@ void	conf_ini_check_parameter(char *str, hash_t *mem, int line)
 	}
 }
 
-/* 
+/*
  * check if a section is valid
  * return: the section id.
  */

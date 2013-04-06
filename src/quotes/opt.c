@@ -52,9 +52,9 @@ int	checkopt(int argc, char **argv)
 {
 	int	c;
 	int	option_index = 0;
-	
+
 	g_database = NULL;
-	
+
 	while (1)
 	{
 		static struct option long_options[] = {
@@ -68,13 +68,13 @@ int	checkopt(int argc, char **argv)
 		{"verbose", 0, 0, 'v'},
 		{0, 0, 0, 0}
 		};
-		
+
 		c = getopt_long(argc, argv, OPTION_STRING,
 				long_options, &option_index);
-		
+
 		if (c == -1)
 			break;
-		
+
 		switch (c) {
 			case 'd':
 				g_mode |= DEBUG;

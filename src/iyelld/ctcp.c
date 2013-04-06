@@ -61,7 +61,7 @@ void	ctcp_parse(struct evbuffer *out, char *line)
 	char		*args;
 	char		*tmp;
 	unsigned int	i;
-	
+
 	/* table of functions pointers */
 	struct cmd_ctcp_s ctcp_cmd[] = {
 		{"CLIENTINFO", ctcp_cmd_clientinfo},
@@ -75,27 +75,27 @@ void	ctcp_parse(struct evbuffer *out, char *line)
 	/* ignore everything but requests */
 	if (strstr(line, "PRIVMSG") == NULL)
 		return;
-	
+
 	/* searching for CTCP "magic" */
 	tmp = line;
 	tmp = memchr(line, 0x01, strlen(line));
 	if (tmp[1] != '\0')
 		tmp++;
-	
+
 	/* searching for CTCP command */
 	cmd = strsep(&tmp, " \001");
 	if (cmd == NULL)
 		return ;
-	
+
 	/* searching for args */
 	args = strsep(&tmp, "\001");
-	
+
 	tmp = line;
 	/* searching for sender, CTCP type and args */
 	from = strsep(&tmp, "!");
 	if (from == NULL)
 		return ;
-	
+
 	/* seems we have everything, search for know command */
 	for (i = 0; ctcp_cmd[i].cmd != NULL; i++) {
 		if (strcmp(ctcp_cmd[i].cmd, cmd) == 0) {
@@ -115,7 +115,7 @@ void	ctcp_request(struct evbuffer *out, char *dest, char *message)
 	evbuffer_add(out, dest, strlen(dest));
 	evbuffer_add(out, " :\x01", 3);
 	evbuffer_add(out, message, strlen(message));
-	evbuffer_add(out, "\x01\n", 2);	
+	evbuffer_add(out, "\x01\n", 2);
 }
 
 /*
@@ -128,9 +128,9 @@ void	ctcp_reply(struct evbuffer *out, char *dest, char *message)
 	evbuffer_add(out, dest, strlen(dest));
 	evbuffer_add(out, " :\x01", 3);
 	evbuffer_add(out, message, strlen(message));
-	evbuffer_add(out, "\x01\n", 2);	
+	evbuffer_add(out, "\x01\n", 2);
 }
- 
+
 /*
  * CTCP CLIENTINFO
  * reply what we are able to manage
@@ -146,13 +146,13 @@ void	ctcp_cmd_clientinfo(struct evbuffer *out, char *from, char *args)
 
 /*
  * CTCP PING
- * reply PING [arg] 
+ * reply PING [arg]
  */
 
 void	ctcp_cmd_ping(struct evbuffer *out, char *from, char *args)
 {
 	char	*tmp = NULL;
-	
+
 	if (g_mode & VERBOSE)
 		printf("[c] CTCP PING from %s\n", from);
 	if (args == NULL || strlen(args) <= 1) {
@@ -168,13 +168,13 @@ void	ctcp_cmd_ping(struct evbuffer *out, char *from, char *args)
 }
 
 /*
- * ping myself 
+ * ping myself
  */
 
 void	ctcp_self_ping(struct evbuffer *out)
 {
 	char	*to;
-	
+
 	to = hash_text_get_first(g_conf.global, "nick");
 	if (to == NULL)
 		perror("[c] cannot allocate memory.\n");
@@ -189,7 +189,7 @@ void	ctcp_self_ping(struct evbuffer *out)
 void	ctcp_cmd_time(struct evbuffer *out, char *from, char *args)
 {
 	char	*tmp = NULL;
-	
+
 	args = NULL;
 	asprintf(&tmp, "TIME %u", (unsigned int)time(NULL));
 	if (tmp == NULL)
@@ -213,7 +213,7 @@ void	ctcp_cmd_userinfo(struct evbuffer *out, char *from, char *args)
 	ctcp_reply(out, from, "USERINFO iyell, bot");
 }
 
-/* 
+/*
  * CTCP VERSION
  * reply <client> <version> <infos>
  */
@@ -222,15 +222,15 @@ void	ctcp_cmd_version(struct evbuffer *out, char *from, char *args)
 {
 	char		*tmp = NULL;
 	struct utsname	name;
-	
+
 	/* cleaning the structure */
 	memset(&name, '\0', sizeof(name));
 	args = NULL;
-	
+
 	/* gathering information */
 	if (uname(&name) == -1)
 		return;
-	
+
 	/* building reply */
 	asprintf(&tmp, "VERSION iyell v%s - running on %s %s / %s", VERSION, \
 		 name.sysname, name.release, name.machine);

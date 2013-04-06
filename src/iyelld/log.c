@@ -55,7 +55,7 @@ void	log_deinit()
 void	log_msg(char *msg, ...)
 {
 	va_list	s;
-	
+
 	if (g_mode & SYSLOG) {
 		va_start(s, msg);
 		vsyslog(LOG_NOTICE, msg + 4, s);
@@ -69,7 +69,7 @@ void	log_msg(char *msg, ...)
 void	log_err(char *msg, ...)
 {
 	va_list	s;
-	
+
 	if (g_mode & SYSLOG) {
 		va_start(s, msg);
 		vsyslog(LOG_ERR, msg + 4, s);

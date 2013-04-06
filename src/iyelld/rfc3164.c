@@ -196,7 +196,7 @@ static short	sl_find_target_bots(unsigned short facility, unsigned short severit
 		return -1;
 
 	if (g_mode & VERBOSE)
-		log_msg("[r] forwarded message with PRI %s.%s TAG %s to bot(s)\n", 
+		log_msg("[r] forwarded message with PRI %s.%s TAG %s to bot(s)\n",
 			facilities[facility], severities[severity], tag);
 	return 0;
 		return -1;
@@ -274,14 +274,14 @@ static short	sl_find_target_channels(struct evbuffer *out, unsigned short facili
 		return -1;
 
 	if (g_mode & VERBOSE)
-		log_msg("[r] forwarded message with PRI %s.%s TAG %s to channel(s)\n", 
+		log_msg("[r] forwarded message with PRI %s.%s TAG %s to channel(s)\n",
 			facilities[facility], severities[severity], tag);
 	return 0;
 }
 
 /*
  * forwad function
- * try to find valid targets (channels or others bots), for the specified 
+ * try to find valid targets (channels or others bots), for the specified
  * syslog message.
  * will use sl_wind_*
  */
@@ -340,7 +340,7 @@ static void	sl_forward_with_host(struct evbuffer *out, unsigned short pri, \
 	tmp = strchr(tag, '[');
 	if (tmp != NULL)
 		*tmp = '\0';
-	
+
 	/* compute len and allocate C99 VLA */
 	len = strlen(tag) + strlen(host) + 2;	/* 2 => '.' + '\0' */
 	if(len > RFC3164_MAX) {
@@ -420,7 +420,7 @@ void	sl_parse(struct evbuffer *out, struct evbuffer *in)
 			if (strncmp(month[s], header, 3) == 0)
 				break ;
 		}
-	
+
 		/* nothing found */
 		if (s == 12)
 			header = NULL;
@@ -432,7 +432,7 @@ void	sl_parse(struct evbuffer *out, struct evbuffer *in)
 			if (hash_text_is_true(g_conf.global, "syslog_show_host"))
 				sl_forward_with_host(out, pri, tag, msg, host);
 			else
-				sl_forward(out, pri, tag, msg);	
+				sl_forward(out, pri, tag, msg);
 		}
 		/* if it fails, try with a date only header */
 		else if (sscanf(line, RFC3164_SCANF_DATE, &pri, tag, msg) == 3) {
@@ -445,10 +445,10 @@ void	sl_parse(struct evbuffer *out, struct evbuffer *in)
 	else {
 		/* header does not exists */
 		if (sscanf(line, RFC3164_SCANF_SHORT, &pri, tag, msg) == 3) {
-			sl_forward(out, pri, tag, msg);			
+			sl_forward(out, pri, tag, msg);
 		}
 		else {
-			log_err("[r] bad syslog packet, dropping\n"); 
+			log_err("[r] bad syslog packet, dropping\n");
 		}
 	}
 

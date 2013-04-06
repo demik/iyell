@@ -8,7 +8,7 @@ extern struct event    ev_udp6;
 extern struct event    ev_unix;
 
 /* IO buffers */
-extern struct evbuffer	*ircin, *ircout; 
+extern struct evbuffer	*ircin, *ircout;
 extern struct evbuffer	*udpin, *unixfifo;
 
 /* timeouts */

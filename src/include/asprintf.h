@@ -1,6 +1,6 @@
 /*
  *  asprintf.h
- *  
+ *
  *
  *  Created by Michel DEPEIGE on 01/04/08.
  *  Copyright (c) 2008 Michel DEPEIGE.

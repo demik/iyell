@@ -29,11 +29,11 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
-#include "conf.h"	
+#include "conf.h"
 #ifdef HAVE_CONFIG_H
 #include "config.h"
 #endif
-#ifdef HAVE_LIBLUA 
+#ifdef HAVE_LIBLUA
 #include <lua.h>
 #include <lauxlib.h>
 #include <lualib.h>
@@ -107,17 +107,17 @@ int	conf_lua_get_data(lua_State *L, char *name, hash_t *hash)
 int	conf_lua_get_globals(lua_State *L, hash_t *hash)
 {
 	char	*keys[] = {
-		"allow_direct", "allow_private_cmd", "bitlbee", "channels", "color", 
+		"allow_direct", "allow_private_cmd", "bitlbee", "channels", "color",
 		"nick",	"perform", "offset", "pass", "port", "quit_message", "realname",
 		"server", "ssl", "sync_message", "sync_notice", "syslog", "throttling",
-		"hooks", "syslog_listener", "syslog_port", "syslog_silent_drop", 
+		"hooks", "syslog_listener", "syslog_port", "syslog_silent_drop",
 		"udp_key", "udp_listener", "udp_port", "unix_listener", "unix_path",
-		"username", NULL 
+		"username", NULL
 	};
 	unsigned short	i = 0;
 
 	while (keys[i] != NULL) {
-		conf_lua_get_data(L, keys[i], hash);		
+		conf_lua_get_data(L, keys[i], hash);
 		i++;
 	}
 	return 0;
@@ -126,7 +126,7 @@ int	conf_lua_get_globals(lua_State *L, hash_t *hash)
 /*
  * load a "section" int he configuration file
  * it's equivalent to each section the INI format, and is an array of strings
- */ 
+ */
 
 int	conf_lua_get_section(lua_State *L, char *section, hash_t *hash)
 {

@@ -1,6 +1,6 @@
 /*
  *  irc.c
- *  iyell 
+ *  iyell
  *
  *  Created by Michel DEPEIGE on 12/10/07.
  *  Copyright (c) 2007 Michel DEPEIGE.
@@ -65,16 +65,16 @@ void	irc_parse(struct evbuffer *out, struct evbuffer *in)
 	size_t		len = 0;
 	char		*ap;
 	unsigned int	i = 0;
-	
+
 	/* table of functions pointers */
 	struct s_message irc_messages[] = {
 		{"PING", irc_cmd_pong},
 		{0, 0}
 	};
-	
+
         if ((tmp = evbuffer_readline(in)) == NULL)
                 return;
-	
+
 parseline:
 	STATS_INC_LINES(x);
 	len = strlen(tmp);
@@ -83,7 +83,7 @@ parseline:
 	tmp[len] = '\0';
 	if (g_mode & DEBUG)
 		printf("<<< %s\n", tmp);
-	
+
 	/* if the line begin by a ":", then it's not a command */
 	if (tmp[0] == ':') {
 		/* check for CTCP */
@@ -107,7 +107,7 @@ parseline:
 			free(ap);
 		}
 	}
-	
+
 	/* check for another line */
 	if (EVBUFFER_LENGTH(in) > 0) {
 		if ((tmp = evbuffer_readline(in)) == NULL)
@@ -138,7 +138,7 @@ void	irc_switch(struct evbuffer *out, char *str)
 	char		*ap;
 	char		*code;
 	unsigned int	i = 0;
-	
+
 	/* table of functions pointers (codes) */
 	struct s_message irc_codes[] = {
 		{RPL_ENDOFMOTD, irc_send_join},
@@ -146,7 +146,7 @@ void	irc_switch(struct evbuffer *out, char *str)
 		{ERR_NICKNAMEINUSE, change_nick},
 		{0, 0}
 	};
-	
+
 	/* table of functions pointers (messages) */
 	struct s_message irc_messages[] = {
 		{"INVITE", irc_check_invite},
@@ -177,7 +177,7 @@ void	irc_switch(struct evbuffer *out, char *str)
 					return ;
 				}
 			}
-			
+
 			/* check for messages */
 			for (i = 0; irc_messages[i].cmd != NULL; i++) {
 				if (strcmp(irc_messages[i].cmd, code) == 0) {
@@ -194,7 +194,7 @@ void	irc_switch(struct evbuffer *out, char *str)
  */
 
 static inline void irc_code_split(char *str, char **who, char **chan)
-{	
+{
 	/* determine the channel */
 	*who = strsep(&str, " ");
 	if (*who == NULL) {
@@ -229,7 +229,7 @@ static	inline void irc_msg_split(char *str, char **who, char **chan)
 void	irc_wait_invite(struct evbuffer *out, char *str)
 {
 	char	*chan = NULL, *who = NULL;
-	
+
 	out = NULL;
 
 	irc_code_split(str, &who, &chan);
@@ -330,9 +330,9 @@ void	irc_got_banned(struct evbuffer *out, char *str)
 {
 	char	*chan = NULL;
 	char	*who = NULL;
-	
+
 	out = NULL;
-	
+
 	irc_code_split(str, &who, &chan);
 	g_mode |= BANNED;
 	log_msg("[i] I'm banned from %s :(\n", chan);
@@ -349,7 +349,7 @@ void	irc_got_banned(struct evbuffer *out, char *str)
 void	irc_cmd_nick(struct evbuffer *out, char *nick)
 {
 	char	*tmp = NULL;
-	
+
 	/* build the command */
 	evbuffer_add(out, "NICK ", 5);
 	if (nick == NULL) {
@@ -357,7 +357,7 @@ void	irc_cmd_nick(struct evbuffer *out, char *nick)
 		evbuffer_add(out, tmp, strlen(tmp));
 	}
 	else {
-		evbuffer_add(out, nick, strlen(nick));		
+		evbuffer_add(out, nick, strlen(nick));
 	}
 	evbuffer_add(out, "\n", 1);
 }
@@ -409,7 +409,7 @@ void	irc_cmd_ping(struct evbuffer *out, char *target)
 void	irc_cmd_pass(struct evbuffer *out)
 {
 	char	*tmp = NULL;
-	
+
 	/* build the command */
 	tmp = hash_text_get_first(g_conf.global, "pass");
 	if (tmp == NULL)
@@ -482,11 +482,11 @@ void	irc_cmd_quit(struct evbuffer *out, char *message)
 void	irc_cmd_user(struct evbuffer *out, char *user)
 {
 	char	*tmp = NULL;
-	
+
 	/* build the command */
 	evbuffer_add(out, "USER ", 5);
 	if (user == NULL) {
-		
+
 		/* check for something in the configuration or use default name */
 		tmp = hash_text_get_first(g_conf.global, "username");
 		if (tmp == NULL) {
@@ -499,7 +499,7 @@ void	irc_cmd_user(struct evbuffer *out, char *user)
 	else {
 		evbuffer_add(out, user, strlen(user));
 	}
-	
+
 	/* check for realname */
 	tmp = hash_text_get_first(g_conf.global, "realname");
 	if (tmp == NULL) {
@@ -521,13 +521,13 @@ void	irc_cmd_join(struct evbuffer *out, char *channel)
 {
 	char	**tmp = NULL;
 	int	i = 0;
-	
+
 	if (channel == NULL) {
 		/* check if we have a channel to join */
 		tmp = hash_get(g_conf.global, "channels");
 		if (tmp == NULL || tmp[0] == NULL)
 			return;
-		
+
 		/* build the command */
 		evbuffer_add(out, "JOIN ", 5);
 		while (tmp[i] != NULL) {
@@ -570,7 +570,7 @@ void	irc_send_helo(struct evbuffer *out)
 	irc_cmd_pass(out);
 	irc_cmd_nick(out, NULL);
 	irc_cmd_user(out, NULL);
-	
+
 	tmp = hash_get(g_conf.global, "perform");
 	if (tmp != NULL) {
 		for (i = 0; tmp[i] != NULL; i++) {

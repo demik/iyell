@@ -1,6 +1,6 @@
 /*
  *  network.c
- *  iyell  
+ *  iyell
  *
  *  Created by Michel DEPEIGE on 12/10/07.
  *  Copyright (c) 2007 Michel DEPEIGE.
@@ -151,7 +151,7 @@ void	net_irc_read(int fd, short event, void *arg)
 	irc_parse(ircout, ircin);
 
 	/* if something in the output buffer, add EV_WRITE */
-	if (EVBUFFER_LENGTH(ircout) > 0) { 
+	if (EVBUFFER_LENGTH(ircout) > 0) {
 		event_set(arg, fd, EV_READ | EV_WRITE, net_irc_event, arg);
 	}
         /* reschedule this event */
@@ -181,7 +181,7 @@ void	net_irc_write(int fd, short event, void *arg)
 	/* send data SSL or raw */
 	if (g_mode & USE_SSL)
 		ret = ssl_send(ssl, EVBUFFER_DATA(ircout), EVBUFFER_LENGTH(ircout));
-	else 
+	else
 		ret = send(fd, EVBUFFER_DATA(ircout), EVBUFFER_LENGTH(ircout), 0);
 	if (ret <= 0) {
 		log_err("[n] error %i while sending data: %s\n",
@@ -246,7 +246,7 @@ void	net_irc_throttled_write(int fd, short event, void *arg)
 	/* reset burst counter if needed */
 	if (current - last > 3)
 		burst_count = 0;
-	
+
 	/* send at most (4 - burst_count) lines => find the first lines lenght */
 	for (i = 0; (i < EVBUFFER_LENGTH(ircout) && (burst_count < 4)); i++) {
 		if (*(data + i) == '\n') {
@@ -268,7 +268,7 @@ void	net_irc_throttled_write(int fd, short event, void *arg)
 	/* send data SSL or raw */
 	if (g_mode & USE_SSL)
 		ret = ssl_send(ssl, EVBUFFER_DATA(ircout), i);
-	else 
+	else
 		ret = send(fd, EVBUFFER_DATA(ircout), i, 0);
 	if (ret <= 0) {
 		log_err("[n] error %i while sending data: %s\n",
@@ -342,7 +342,7 @@ void	irc_shutdown(int fd, short event, void *out)
  * Try to purge output IRC buffer (delete / readd event)
  */
 
-void	net_force_output(struct event *ev) 
+void	net_force_output(struct event *ev)
 {
 	int	fd;
 
@@ -353,7 +353,7 @@ void	net_force_output(struct event *ev)
 	}
 	event_set(ev, fd, EV_READ | EV_WRITE, net_irc_event, ev);
 
-        if (event_add(ev, TIMEOUT_IRC) == -1) { 
+        if (event_add(ev, TIMEOUT_IRC) == -1) {
 		log_err("[n] cannot event_add(): %s\n", strerror(errno));
 	}
 
@@ -399,12 +399,12 @@ void	net_dgram4_read(int fd, short event, void *arg)
 	evbuffer_add(dgram_in, tmp, ret);
 
 	/* print information avout UDP */
-	log_msg("[i] UDP packet from %s (len: %i)\n", 
+	log_msg("[i] UDP packet from %s (len: %i)\n",
 	       inet_ntop(client.sin_family, &client.sin_addr, tmp, BUFF_SIZE), ret);
 	dgram_parse(ircout, dgram_in);
 
 	/* if something in the output buffer, send it */
-	if (EVBUFFER_LENGTH(ircout) > 0) 
+	if (EVBUFFER_LENGTH(ircout) > 0)
 		net_force_output(&ev_irc);
 }
 
@@ -414,10 +414,10 @@ void	net_dgram6_read(int fd, short event, void *arg)
 	struct sockaddr_in6	client6;
 	socklen_t		client_len6;
 	char			tmp[BUFF_SIZE];
-	
+
 	event = 0;
 	arg = 0;
-	
+
 	client_len6 = sizeof(client6);
 	ret = recvfrom(fd, tmp, BUFF_SIZE, 0, (struct sockaddr *)&client6, &client_len6);
 	if (ret <= 0) {
@@ -430,12 +430,12 @@ void	net_dgram6_read(int fd, short event, void *arg)
 	evbuffer_add(dgram_in, tmp, ret);
 
 	/* print information avout UDP */
-	log_msg("[i] UDP packet from %s (len: %i)\n", 
+	log_msg("[i] UDP packet from %s (len: %i)\n",
 	       inet_ntop(client6.sin6_family, &client6.sin6_addr, tmp, BUFF_SIZE), ret);
 	dgram_parse(ircout, dgram_in);
 
 	/* if something in the output buffer, send it */
-	if (EVBUFFER_LENGTH(ircout) > 0) 
+	if (EVBUFFER_LENGTH(ircout) > 0)
 		net_force_output(&ev_irc);
 }
 
@@ -461,12 +461,12 @@ void	net_sl4_read(int fd, short event, void *arg)
 	evbuffer_add(syslog_in, tmp, ret);
 
 	/* print information avout UDP */
-	log_msg("[n] syslog packet from %s (len: %i)\n", 
+	log_msg("[n] syslog packet from %s (len: %i)\n",
 	       inet_ntop(client.sin_family, &client.sin_addr, tmp, BUFF_SIZE), ret);
 	sl_parse(ircout, syslog_in);
 
 	/* if something in the output buffer, send it */
-	if (EVBUFFER_LENGTH(ircout) > 0) 
+	if (EVBUFFER_LENGTH(ircout) > 0)
 		net_force_output(&ev_irc);
 }
 
@@ -476,10 +476,10 @@ void	net_sl6_read(int fd, short event, void *arg)
 	struct sockaddr_in6	client6;
 	socklen_t		client_len6;
 	char			tmp[BUFF_SIZE];
-	
+
 	event = 0;
 	arg = 0;
-	
+
 	client_len6 = sizeof(client6);
 	ret = recvfrom(fd, tmp, BUFF_SIZE, 0, (struct sockaddr *)&client6, &client_len6);
 	if (ret <= 0) {
@@ -492,12 +492,12 @@ void	net_sl6_read(int fd, short event, void *arg)
 	evbuffer_add(syslog_in, tmp, ret);
 
 	/* print information avout UDP */
-	log_msg("[i] syslog packet from %s (len: %i)\n", 
+	log_msg("[i] syslog packet from %s (len: %i)\n",
 	       inet_ntop(client6.sin6_family, &client6.sin6_addr, tmp, BUFF_SIZE), ret);
 	sl_parse(ircout, syslog_in);
 
 	/* if something in the output buffer, send it */
-	if (EVBUFFER_LENGTH(ircout) > 0) 
+	if (EVBUFFER_LENGTH(ircout) > 0)
 		net_force_output(&ev_irc);
 }
 /*
@@ -513,7 +513,7 @@ void	net_unix_read(int fd, short event, void *arg)
         struct event *ev = arg;
 	/* Reschedule this event */
 	event_add(ev, NULL);
-				
+
 	ret = read(fd, tmp, BUFF_SIZE);
 	if (ret < 0) {
 		net_unix_stop(fd);
@@ -530,7 +530,7 @@ void	net_unix_read(int fd, short event, void *arg)
 	info_parse(ircout, unix_sock);
 
 	/* if something in the output buffer, send it */
-	if (EVBUFFER_LENGTH(ircout) > 0) 
+	if (EVBUFFER_LENGTH(ircout) > 0)
 		net_force_output(&ev_irc);
 }
 
@@ -552,7 +552,7 @@ int	net_loop(void)
 	    (ircin == NULL) || (ircout == NULL) || (syslog_in == NULL))
 		goto shutdown;
 
-	/* Initlialise the listeners */ 
+	/* Initlialise the listeners */
 	ret = start_listeners();
 	if (ret == ERROR)
 		goto shutdown;
@@ -561,7 +561,7 @@ int	net_loop(void)
 	if (g_mode & USE_SSL)
 		if (ssl_init() == -1)
 			return -1;
-	
+
 	/* Initialise the IRC IO stuff */
 	ret = irc_connect();
 	if (ret == NOSERVER)
@@ -571,15 +571,15 @@ int	net_loop(void)
 	if (ret > 0) {
 		/* SSL Handshake if needed */
 		if (g_mode & USE_SSL)
-			if (ssl_handshake(ret) == -1) 
+			if (ssl_handshake(ret) == -1)
 				goto shutdown;
-	
+
 		irc_send_helo(ircout);
 	}
 	else {
 		schedule_reconnection(30);
 	}
-	
+
 	if (g_mode & STARTING)
 		g_mode &= ~STARTING;
 
@@ -606,7 +606,7 @@ shutdown:
 		EVP_cleanup();			/* SSL_library_cleanup() */
 		CRYPTO_cleanup_all_ex_data();	/*     */
 	}
-	
+
 	return 0;
 }
 
@@ -628,11 +628,11 @@ int	irc_connect(void)
 	else
 		log_msg("[n] connecting to server...\n");
 
-	/* 
-	 * we ask the configuration for server name and port 
+	/*
+	 * we ask the configuration for server name and port
 	 * then set the structures.
 	 */
-	
+
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_STREAM;
@@ -645,25 +645,25 @@ int	irc_connect(void)
 	else {
 		port = tmp[0];
 	}
-	
+
 	tmp = hash_get(g_conf.global, "server");
 	if (tmp == NULL || tmp[0] == NULL) {
 		log_err("[n] cannot find any servers, exiting\n");
 		return NOSERVER;
 	}
-	
+
 	if ((error = getaddrinfo(tmp[0], port, &hints, &res0))) {
 		log_err("[n] host not found: %s (%s)\n",
 			tmp[0], gai_strerror(error));
 		return ERROR;
 	}
-	
+
 	log_msg("[n] trying to connect to %s:%s...\n", tmp[0], port);
 
 	/*
 	 * try to connect
 	 */
-	
+
 	s = -1;
 	for (res = res0; res; res = res->ai_next) {
 		s = socket(res->ai_family, res->ai_socktype,
@@ -671,16 +671,16 @@ int	irc_connect(void)
 		if (s < 0) {
 			continue;
 		}
-		
+
 		if (connect(s, res->ai_addr, res->ai_addrlen) < 0) {
 			close(s);
 			s = -1;
 			continue;
 		}
-		
+
 		break;  /* here we go */
 	}
-	
+
 	if (s < 0) {
 		log_err("[n] cannot connect to server: %s\n", strerror(errno));
 		return ERROR;
@@ -690,8 +690,8 @@ int	irc_connect(void)
 	switch (res->ai_family) {
 		case AF_INET: {
 			char ntop[INET_ADDRSTRLEN];
-			
-			if (inet_ntop(res->ai_family, &((struct sockaddr_in *)res->ai_addr)->sin_addr, ntop, INET_ADDRSTRLEN)) 
+
+			if (inet_ntop(res->ai_family, &((struct sockaddr_in *)res->ai_addr)->sin_addr, ntop, INET_ADDRSTRLEN))
 				log_msg("[n] connected to %s:%s (%i)\n", ntop, port, s);
 			else
 				log_err("[n] inet_ntop() error: %s\n", strerror(errno));
@@ -703,13 +703,13 @@ int	irc_connect(void)
 			if (inet_ntop(res->ai_family, &((struct sockaddr_in6 *)res->ai_addr)->sin6_addr, ntop, INET6_ADDRSTRLEN))
 				log_msg("[n] connected to [%s]:%s (%i)\n", ntop, port, s);
 			else
-				log_err("[n] inet_ntop() error: %s\n", strerror(errno));	
+				log_err("[n] inet_ntop() error: %s\n", strerror(errno));
 			break;
 		}
-		default: 
+		default:
 			log_msg("[n] getaddrinfo() error: %s\n", strerror(EAFNOSUPPORT));
 	}
-	
+
 	freeaddrinfo(res0);
 	return s;
 }
@@ -748,7 +748,7 @@ void	net_irc_cleanup(int socket)
 		event_loopbreak();
 		return ;
 	}
-	schedule_reconnection(15);	
+	schedule_reconnection(15);
 }
 
 /*
@@ -783,7 +783,7 @@ void	irc_reconnect(int fd, short event, void *arg)
 			schedule_reconnection(60);
 			return ;
 		}
-			
+
 	irc_send_helo(ircout);
 }
 
@@ -830,7 +830,7 @@ int	start_listeners()
 			event_add(&ev_udp4, NULL);
 		}
 	}
-	
+
 	/* Initlialise the UNIX listener if needed */
 	if (hash_text_is_true(g_conf.global, "unix_listener")) {
 		ret = net_unix_start();
@@ -839,7 +839,7 @@ int	start_listeners()
 			event_add(&ev_unix, NULL);
 		}
 	}
-	
+
 	return NOERROR;
 }
 
@@ -949,7 +949,7 @@ int	net_udp_start(int family, char *desc, char *setting)
 	int			b, error, s;
 	struct addrinfo		hints, *server;
 	char			*port;
-	
+
 	assert(setting != NULL);
 	if (desc == NULL)
 		desc = "UDP";
@@ -960,7 +960,7 @@ int	net_udp_start(int family, char *desc, char *setting)
 	hints.ai_family = family;
 	hints.ai_socktype = SOCK_DGRAM;
 	hints.ai_flags = AI_PASSIVE;
-	
+
 	/* get the port from the configuration */
 	port = hash_text_get_first(g_conf.global, setting);
 	if (port == NULL) {
@@ -1026,15 +1026,15 @@ int	net_create_udp_socket(char *host, char *port)
 	int			error;
 	char			*cause;
 
-	/* 
-	 * we ask the configuration for server name and port 
+	/*
+	 * we ask the configuration for server name and port
 	 * then set the structures.
 	 */
-	
+
 	memset(&hints, 0, sizeof(hints));
 	hints.ai_family = AF_UNSPEC;
 	hints.ai_socktype = SOCK_DGRAM;
-	
+
 	if (g_mode & VERBOSE)
 		log_msg("[n] creating UDP socket to [%s]:%s...\n", host, port);
 
@@ -1047,7 +1047,7 @@ int	net_create_udp_socket(char *host, char *port)
 	/*
 	 * try to connect
 	 */
-	
+
 	s = -1;
 	for (res = res0; res; res = res->ai_next) {
 		s = socket(res->ai_family, res->ai_socktype,
@@ -1056,17 +1056,17 @@ int	net_create_udp_socket(char *host, char *port)
 			cause = "[n] socket() error";
 			continue;
 		}
-		
+
 		if (connect(s, res->ai_addr, res->ai_addrlen) < 0) {
 			cause = "[n] connect() error";
 			close(s);
 			s = -1;
 			continue;
 		}
-		
+
 		break;  /* here we go */
 	}
-	
+
 	if (s < 0) {
 		log_err("[n] cannot create UDP socket to %s: %s", host, strerror(errno));
 		return -1;

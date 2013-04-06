@@ -1,6 +1,6 @@
 /*
  *  stats.c
- *  
+ *
  *
  *  Created by Michel DEPEIGE on 01/06/2008.
  *  Copyright (c) 2008 Michel DEPEIGE.
@@ -47,7 +47,7 @@ static void	stats_clear(stats_t *stats);
 
 /*
  * Clear a stats_t structure;
- */ 
+ */
 
 static void	stats_clear(stats_t *stats)
 {
@@ -71,7 +71,7 @@ static void	stats_clear(stats_t *stats)
 int	stats_init()
 {
 	time_t	boot;
-	
+
 	stats_clear(&gstats);
 	boot = time(NULL);
 	if (boot == -1) {

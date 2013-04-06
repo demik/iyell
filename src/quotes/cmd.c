@@ -1,6 +1,6 @@
 /*
  *  cmd.c
- *  iyell/quotes 
+ *  iyell/quotes
  *
  *  Created by Michel DEPEIGE on 01/03/2009.
  *  Copyright (c) 2009 Michel DEPEIGE.
@@ -70,7 +70,7 @@ typedef struct  cmd_quote_s {
 void	cmd_add(struct evbuffer *out, char *nick, char *channel, char *args)
 {
 	char	*sql_error;
-	
+
 	if (args == NULL || strlen(args) == 0) {
 		evbuffer_add_printf(out, "%s:%s:%s add <something>\n", \
 				    nick, channel, g_name);
@@ -106,11 +106,11 @@ void	cmd_count(struct evbuffer *out, char *nick, char *channel, char *args)
 int	cmd_count_cb(void *tab, int argc, char **argv, char **col_name)
 {
 	char	**source;
-	
+
 	col_name = NULL;
 	if (argc != 1)
 		return 0;
-	
+
 	source = tab;
 	evbuffer_add_printf(out, "%s:%s:total quotes in database: %s\n", \
 			    source[NICK], source[CHANNEL], argv[0] ? argv[0] : "n/a");
@@ -122,7 +122,7 @@ int	cmd_count_cb(void *tab, int argc, char **argv, char **col_name)
 void	cmd_del(struct evbuffer *out, char *nick, char *channel, char *args)
 {
 	char	*sql_error;
-	
+
 	if (args == NULL || strlen(args) == 0) {
 		evbuffer_add_printf(out, "%s:%s:%s del <id>\n", \
 				    nick, channel, g_name);
@@ -140,11 +140,11 @@ void	cmd_del(struct evbuffer *out, char *nick, char *channel, char *args)
 int	cmd_del_cb(void *tab, int argc, char **argv, char **col_name)
 {
 	char	**source;
-	
+
 	col_name = NULL;
 	if (argc != 1)
 		return 0;
-	
+
 	source = tab;
 	evbuffer_add_printf(out, "%s:%s:quote deleted successfully (%s)\n", \
 			    source[NICK], source[CHANNEL], argv[0] ? argv[0] : "n/a");
@@ -163,7 +163,7 @@ int	cmd_data_cb(void *tab, int argc, char **argv, char **col_name)
 {
 	char	*format;
 	char	**source;
-	
+
 	col_name = NULL;
 	if (argc != 1)
 		return 0;
@@ -201,7 +201,7 @@ static char	*cmd_dup_nick(char *str)
 {
 	char	*nick;
 	size_t	len;
-	
+
 	if (str == NULL)
 		return NULL;
 	for (len = 0; (str[len] != '!') && (str[len] != '\0'); len++);
@@ -236,7 +236,7 @@ void	cmd_help(struct evbuffer *out, char *nick, char *channel, char *args)
 void	cmd_info(struct evbuffer *out, char *nick, char *channel, char *args)
 {
 	char	*sql_error;
-	
+
 	if (args == NULL || strlen(args) == 0) {
 		evbuffer_add_printf(out, "%s:%s:%s info <something>\n", \
 				    nick, channel, g_name);
@@ -255,17 +255,17 @@ int	cmd_info_cb(void *tab, int argc, char **argv, char **col_name)
 {
 	char	*nick;
 	char	**source;
-	
+
 	col_name = NULL;
 	source = tab;
-	
+
 	/* nothing found or database b0rked */
 	if (argc < 4) {
 		evbuffer_add_printf(out, "%s:%s:nothing found\n", \
 				    source[NICK], source[CHANNEL]);
 		return 0;
 	}
-	
+
 	/* strip nick */
 	nick = cmd_dup_nick(argv[2]);
 
@@ -284,7 +284,7 @@ int	cmd_info_cb(void *tab, int argc, char **argv, char **col_name)
 void	cmd_id(struct evbuffer *out, char *nick, char *channel, char *args)
 {
 	char	*sql_error;
-	
+
 	if (args == NULL || strlen(args) == 0) {
 		evbuffer_add_printf(out, "%s:%s:%s id <id>\n", \
 				    nick, channel, g_name);
@@ -316,11 +316,11 @@ void	cmd_interval(struct evbuffer *out, char *nick, char *channel, char *args)
 int	cmd_interval_cb(void *tab, int argc, char **argv, char **col_name)
 {
 	char	**source;
-	
+
 	col_name = NULL;
 	if (argc < 2)
 		return 0;
-	
+
 	source = tab;
 	if (argv[1] != NULL)
 		evbuffer_add_printf(out, "%s:%s:interval for this channel is " \
@@ -337,7 +337,7 @@ int	cmd_interval_cb(void *tab, int argc, char **argv, char **col_name)
 void	cmd_like(struct evbuffer *out, char *nick, char *channel, char *args)
 {
 	char	*sql_error;
-	
+
 	if (args == NULL || strlen(args) == 0) {
 		evbuffer_add_printf(out, "%s:%s:%s like <something>\n", \
 				    nick, channel, g_name);
@@ -422,7 +422,7 @@ parseline:
 		}
 	}
 
-	cmd_switch(out, nick, channel, cmd, args); 
+	cmd_switch(out, nick, channel, cmd, args);
 
 next:
 	free(tmp);
@@ -439,7 +439,7 @@ next:
 void	cmd_random(struct evbuffer *out, char *nick, char *channel, char *args)
 {
 	char	*sql_error;
-	
+
 	if (args == NULL || strlen(args) == 0)
 		args = "*";
 	if ((sql_error = db_random(nick, channel, args)) != NULL) {
@@ -465,7 +465,7 @@ void	cmd_status(struct evbuffer *out, char *nick, char *channel, char *args)
 void	cmd_search(struct evbuffer *out, char *nick, char *channel, char *args)
 {
 	char	*sql_error;
-	
+
 	if (args == NULL || strlen(args) == 0) {
 		evbuffer_add_printf(out, "%s:%s:%s search <something>\n", \
 				    nick, channel, g_name);
@@ -487,7 +487,7 @@ int	cmd_search_cb(void *tab, int argc, char **argv, char **col_name)
 
 	col_name = NULL;
 	source = tab;
-	
+
 	/* nothing found or database b0rked */
 	if (argc != 3) {
 		log_err("[c] got garbage from db\n");

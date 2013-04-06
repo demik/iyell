@@ -1,6 +1,6 @@
 /*
  *  db.c
- *  iyell/quotes 
+ *  iyell/quotes
  *
  *  Created by Michel DEPEIGE on 24/02/2009.
  *  Copyright (c) 2009 Michel DEPEIGE.
@@ -92,7 +92,7 @@ char	*db_add(char *nick, char *channel, char *args)
 {
 	char	*query;
 	char	*sql_error = NULL;
-	
+
 	query = sqlite3_mprintf(DB_ADD, args, nick, channel);
 	sqlite3_exec(db, query, NULL, NULL, &sql_error);
 	sqlite3_free(query);
@@ -113,7 +113,7 @@ char	*db_count_quotes(char *nick, char *channel, char *args)
 {
 	char	*source[2];
 	char	*sql_error = NULL;
-	
+
 	args = NULL;
 	source[0] = nick;
 	source[1] = channel;
@@ -223,7 +223,7 @@ char	*db_interval(char *nick, char *channel, char *args)
 	char	*query;
 	char	*source[2];
 	char	*sql_error = NULL;
-	
+
 	query = sqlite3_mprintf(DB_INTERVAL, args);
 	source[0] = nick;
 	source[1] = channel;

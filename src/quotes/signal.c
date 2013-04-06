@@ -1,6 +1,6 @@
 /*
  *  signal.c
- *  iyell/quotes 
+ *  iyell/quotes
  *
  *  Created by Michel DEPEIGE on 25/02/2009.
  *  Copyright (c) 2009 Michel DEPEIGE.

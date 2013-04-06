@@ -71,7 +71,7 @@ void	dgram_parse(struct evbuffer *out, struct evbuffer *in)
 
 /*
  * check timestamp validity
- * *t = a null terminated timestamp ascii string 
+ * *t = a null terminated timestamp ascii string
  * - return 1 if timestamp is valid
  * - return 0 of not
 * - return -1 on error
@@ -151,21 +151,21 @@ parseline:
 	if (ap != NULL) {
 		/* split the timestamp and the message, ts = timestamp, tmp = message */
 		ts = strsep(&tmp, ":");
-		
+
 		/* check if the timestamp is here */
 		if (ts == NULL || (strlen(ts) == 0)) {
 			log_err("[i] no timestamp, dropping\n");
 			free(ap);
 			goto error;
 		}
-		
+
 		/* check if the message is correct */
 		if (tmp == NULL || (strlen(tmp) == 0)) {
 			log_err("[i] no message, dropping\n");
 			free(ap);
 			goto error;
 		}
-		
+
 		/* we have something, find what it is, send it to IRC ! */
 		errno = 0;
 		ret = info_check_timestamp(ts);
@@ -195,7 +195,7 @@ parseline:
 	free(ap);
 	evbuffer_drain(in, len + 1);
 	STATS_INC_GMSG(x);
-	
+
 	/* check for another line */
 	if (EVBUFFER_LENGTH(in) > 0) {
 		if ((tmp = evbuffer_readline(in)) == NULL) {
@@ -212,9 +212,9 @@ error:
 	return ;
 }
 
-/* 
+/*
  * just find target channel(s) and bot(s)/
- * 
+ *
  * subfunctions :
  * - find_target_bots()
  * - find_target_channels()
@@ -272,12 +272,12 @@ void	info_direct_forward(struct evbuffer *out, char *type, char *message)
 		irc_cmd_privmsg(out, "&bitlbee", tmp);
 		free(tmp);
 	}
-																												        
+
 	/* standard mode */
 	irc_cmd_privmsg(out, type, message);
 }
 
-/* 
+/*
  * search in the configuration for eligibles bots and transmit the message
  * return -1 if nothing found, 0 otherwise.
  * C99 variable lengh array used
@@ -292,7 +292,7 @@ static int	find_target_bots(char *type, char *message)
 	tmp = hash_get(g_conf.transmit, type);
 	if (tmp == NULL)
 		return -1;
-	
+
 	if (g_mode & VERBOSE)
 		printf("[i] forwarding message \"%s\" to bot(s)\n", message);
 	for (i = 0; tmp[i] != NULL; i++) {
@@ -316,7 +316,7 @@ static int	find_target_channels(struct evbuffer *out, char *type, char *message)
 	tmp = hash_get(g_conf.forward, type);
 	if (tmp == NULL)
 		return -1;
-	
+
 	if (g_mode & VERBOSE)
 		printf("[i] forwarding message \"%s\" to channel(s)\n", message);
 	/* send it */
@@ -334,7 +334,7 @@ static char	*udp_get_key()
 {
 	char	*tmp;
 	char	*key = NULL;
-	
+
 	tmp = hash_text_get_first(g_conf.global, "udp_key");
 	key = tmp;
 	return (key);
