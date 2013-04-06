@@ -65,7 +65,7 @@ void	change_nick(struct evbuffer *out, char *nick)
 		schedule_regain_nick(180);
 	g_mode |= NICKUSED;
 
-	/* 
+	/*
 	 * this code help to choose a temporary nickname while connecting
 	 * to the server
 	 */
@@ -73,7 +73,7 @@ void	change_nick(struct evbuffer *out, char *nick)
 	if (! (g_mode & CONNECTED)) {
 		/* we need this if we don't want to flood the server */
 		sleep(1);
-		
+
 		/* compute the nick and try it */
 		nick = strdup(hash_text_get_first(g_conf.global, "nick"));
 		if (nick == NULL)

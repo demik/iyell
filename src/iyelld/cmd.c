@@ -80,12 +80,12 @@ void	cmd_check_irc_msg(struct evbuffer *out, char *who, char *str)
 		return ;
 	str++;
 
-	me = hash_text_get_first(g_conf.global, "nick");	
+	me = hash_text_get_first(g_conf.global, "nick");
 	if (me == NULL)
 		return ; /* if we are here, then WTF */
 
 	/* privates messages management */
-	if (strcmp(where, me) == 0) { 
+	if (strcmp(where, me) == 0) {
 		if (! hash_text_is_true(g_conf.global, "allow_private_cmd"))
 			return ;
 		cmd_switch(out, get_nick_from_mask(who), str, NULL);
@@ -95,7 +95,7 @@ void	cmd_check_irc_msg(struct evbuffer *out, char *who, char *str)
 	me_len = strlen(me);
 	str_len = strlen(str);
 	if ((me_len + 2) > str_len)
-		return ; 
+		return ;
 	if (strncmp(str, me, me_len) == 0) {
 		if (str[me_len] == ':' || str[me_len] == '>' || str[me_len] == ' ')
 			cmd_switch(out, who, str + me_len + 1, where);
@@ -135,7 +135,7 @@ void	cmd_build_args(char *str, int *argc, char **argv)
  * Fin the right function for this command
  * if who == NULL -> private message, respond in "where"
  */
- 
+
 void	cmd_switch(struct evbuffer *out, char *who, char *what, char *where)
 {
 	char		*tab[MAX_TOKENS];
@@ -199,7 +199,7 @@ void	cmd_search_hooks(int argc, char **argv, char *who, char *where)
 			    ! hash_text_is_false(g_conf.cmd, (char *)recs[i].key))
 				hooks_cmd_switch(argc, argv, who, where);
 		}
-	}	
+	}
 }
 
 /* === LIVE COMMANDS BELOW === */
@@ -231,7 +231,7 @@ void	cmd_ping(struct evbuffer *out, int argc, char **argv, char *who, char *wher
 	argv = NULL;
 	if (! hash_text_is_true(g_conf.cmd, "ping"))
 		return;
-	if (where) { 
+	if (where) {
         	asprintf(&tmp, "%s: pong", get_nick_from_mask(who));
         	if (tmp == NULL)
                 	return;
@@ -257,7 +257,7 @@ void    cmd_stats(struct evbuffer *out, int argc, char **argv, char *who, char *
 	argc = 0;
 	argv = NULL;
 
-	if (where) 
+	if (where)
 		asprintf(&tmp, "%s: \2[\2irc\2]\2 %ld KiB in, %ld KiB out, %ld lines " \
 			 "\2[\2msg\2]\2 %ld KiB in, %ld KiB out, %ld offset exceeded, " \
 			 "%ld ok, %ld error(s)",
@@ -316,7 +316,7 @@ static inline void	cmd_build_modes(char *tab)
 	for (i = 0; i < (STATUS_SIZE - 1); i++) {
 		if (g_mode & mode[i])
 			tab[i] = on[i];
-	}	
+	}
 }
 
 /*
@@ -344,7 +344,7 @@ void	cmd_timestamp(struct evbuffer *out, int argc, char **argv, char *who, char 
 	if (len >= BUFF_SIZE || len < 0)
 		return ;
 	val = strtol(argv[1], &endptr, 10);
-	
+
 	/* check for errors */
 	if ((errno == ERANGE) || (errno != 0 && val == 0)) {
 		if (g_mode & VERBOSE)
@@ -381,7 +381,7 @@ void    cmd_uptime(struct evbuffer *out, int argc, char **argv, char *who, char 
 	unsigned int	days = 0, hours = 0, minutes = 0;
 	time_t		seconds;
 	struct tm	*current;
-	char		modes[STATUS_SIZE];	
+	char		modes[STATUS_SIZE];
 
 	if (gstats.boot_timestamp == 0) {
 		log_err("[c] boot_timestamp incorect, cannot build uptime\n");
@@ -390,7 +390,7 @@ void    cmd_uptime(struct evbuffer *out, int argc, char **argv, char *who, char 
 	if (! hash_text_is_true(g_conf.cmd, "uptime"))
 		return ;
 	argc = 0;
-	argv = NULL; 
+	argv = NULL;
 	if ((time(&seconds)) == -1) {
 		log_err("[c] time() error: %s\n", strerror(errno));
 		return ;
@@ -400,7 +400,7 @@ void    cmd_uptime(struct evbuffer *out, int argc, char **argv, char *who, char 
 
 	/* find day(s) / hour(s) / minute(s) */
 	uptime = seconds - gstats.boot_timestamp;
-	days = uptime / (60 * 60 * 24); 
+	days = uptime / (60 * 60 * 24);
 	minutes = uptime / 60;
 	hours = (minutes / 60) % 24;
 
@@ -430,7 +430,7 @@ void    cmd_uptime(struct evbuffer *out, int argc, char **argv, char *who, char 
 			 current->tm_hour, current->tm_min, \
 			 uptime % 60, modes);
 	}
-	
+
 	/* send result */
 	if (tmp == NULL)
 		return ;

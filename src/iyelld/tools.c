@@ -51,9 +51,9 @@ int	checkopt(int argc, char **argv)
 {
 	int	c;
 	int	option_index = 0;
-	
+
 	g_file = NULL;
-	
+
 	while (1)
 	{
 		static struct option long_options[] = {
@@ -68,13 +68,13 @@ int	checkopt(int argc, char **argv)
 		{"verbose", 0, 0, 'v'},
 		{0, 0, 0, 0}
 		};
-		
+
 		c = getopt_long(argc, argv, OPTION_STRING,
 				long_options, &option_index);
-		
+
 		if (c == -1)
 			break;
-		
+
 		switch (c) {
 			case 'b':
 				g_mode |= DAEMON;
@@ -143,11 +143,11 @@ void	version(void)
 void	daemonize(void)
 {
 	pid_t pid, sid;
-	
+
 	/* already a daemon */
 	if (getppid() == 1)
 		return;
-	
+
 	/* duplicate and quit the parrent */
 	pid = fork();
 	if (pid < 0)
@@ -156,14 +156,14 @@ void	daemonize(void)
 		exit(NOERROR);
 
 	umask(0);
-	
+
 	sid = setsid();
 	if (sid < 0)
 		fatal("cannot setsid()");
-	
+
 	if ((chdir("/")) < 0)
 		fatal("cannot chdir()");
-	
+
 	/* redirect everything to the void */
 	freopen("/dev/null", "r", stdin);
 	freopen("/dev/null", "w", stdout);

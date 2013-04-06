@@ -36,7 +36,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include "posix+bsd.h"
-#include <event.h> 
+#include <event.h>
 #include "irc.h"
 #include "heap.h"
 #include "hooks.h"
@@ -94,9 +94,9 @@ void	hooks_broadcast_sig(hook_t *h, int sig)
 	}
 }
 
-/* 
+/*
  * build on array of arguments for a child
- * 
+ *
  * example: test -f foo
  * result[0] = test, result[1] = -f, result[2] = foo
  */
@@ -122,7 +122,7 @@ static void	hooks_build_argv(char *cmd, char **result)
 }
 
 /*
- * execute switch function. 
+ * execute switch function.
  * check is the hook is valid
  * determine the type of hook :
  * - simple command : launch & grab stdout
@@ -197,7 +197,7 @@ void	hooks_cmd_switch(int argc, char **argv, char *who, char *where)
  * the child shound send us a result to stdout, and exit.
  */
 
-void	hooks_cmd_oneshot(char *cmd, char **exec, int argc, 
+void	hooks_cmd_oneshot(char *cmd, char **exec, int argc,
 			  char **argv, char *who, char *where)
 {
 	pid_t		pid;
@@ -210,7 +210,7 @@ void	hooks_cmd_oneshot(char *cmd, char **exec, int argc,
 		return ;
 	}
 
-	/* the callback will carry this structure, so we need to allocate it */	
+	/* the callback will carry this structure, so we need to allocate it */
 	h = malloc(sizeof(hook_t));
 	if (h == NULL) {
 		log_err("[h] malloc() error: %s\n", strerror(errno));
@@ -257,7 +257,7 @@ void	hooks_cmd_oneshot(char *cmd, char **exec, int argc,
 		}
 
 		execvp(exec[0], tmp);
-		log_err("[h] cannot execute %s: %s\n", 
+		log_err("[h] cannot execute %s: %s\n",
 			exec[0], strerror(errno));
 		free(tmp);
 		exit(errno);
@@ -292,7 +292,7 @@ hook_t	*hooks_cmd_pipe(char *cmd, char **exec)
 		return NULL;
 	}
 
-	/* the callback will carry this structure, so we need to allocate some memory */	
+	/* the callback will carry this structure, so we need to allocate some memory */
 	h = malloc(sizeof(hook_t));
 	if (h == NULL) {
 		log_err("[h] malloc() error: %s\n", strerror(errno));
@@ -326,7 +326,7 @@ hook_t	*hooks_cmd_pipe(char *cmd, char **exec)
 		free(h);
 		return NULL;
 	}
-	if (pid == 0) { 
+	if (pid == 0) {
 		/* close unuseds ends */
 		if (close(pfp_in[0]) == -1 || close(pfp_out[1] == -1)) {
 			log_err("[h] close() error: %s\n", strerror(errno));
@@ -341,9 +341,9 @@ hook_t	*hooks_cmd_pipe(char *cmd, char **exec)
 		}
 
 		execvp(exec[0], exec);
-		log_err("[h] cannot execute %s: %s\n", 
+		log_err("[h] cannot execute %s: %s\n",
 			exec[0], strerror(errno));
-		
+
 		exit(errno);
 	}
 	else {
@@ -376,7 +376,7 @@ int	hooks_count(hook_t *h)
 	return count;
 }
 
-/* 
+/*
  * delete a spificif hook by path
  * - return 0 if ok
  * - return -1 on error
@@ -397,10 +397,10 @@ int	hooks_delete(hook_t **first, hook_t *trash)
 			return 0;
 		}
 	}
-	return 1;	
+	return 1;
 }
 
-/* free hooks chained list */ 
+/* free hooks chained list */
 void	hooks_destroy(hook_t **h)
 {
 	hook_t	*tmp;
@@ -417,7 +417,7 @@ void	hooks_destroy(hook_t **h)
 void	hooks_dump(hook_t *h)
 {
 	for (; h != NULL; h = h->next) {
-		printf("hook: %s, pid: %i, r: Ox%lx, w: 0x%lx, d: 0x%lx\n", 
+		printf("hook: %s, pid: %i, r: Ox%lx, w: 0x%lx, d: 0x%lx\n",
 			h->path, h->pid, (long)h->read,
 			(long)h->write, (long)h->data);
 	}
@@ -650,8 +650,8 @@ void	hooks_pipe_error(struct bufferevent *ev, short what, void *arg)
 }
 
 /*
- * search if a specific hook is launched
- * 
+ * search if a specific hook is launched  
+ *
  * return valued:
  * - a pointer to a hook_s struct if something is found
  * - NULL otherwise

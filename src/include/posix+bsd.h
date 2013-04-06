@@ -26,7 +26,7 @@
 #define POSIX_BSD_H
 
 /* h4x */
-#ifndef u_char 
+#ifndef u_char
 typedef unsigned char           u_char;
 #endif
 #ifndef u_short

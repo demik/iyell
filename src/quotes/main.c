@@ -1,6 +1,6 @@
 /*
  *  main.c
- *  iyell/quotes 
+ *  iyell/quotes
  *
  *  Created by Michel DEPEIGE on 18/02/2009.
  *  Copyright (c) 2009 Michel DEPEIGE.
@@ -86,15 +86,15 @@ int	main(int argc, char *argv[])
 
 	/* init logsi, db */
 	log_init();
-	
+
 	if ((bot = event_init()) == NULL)
 		fatal("[-] cannot init libevent, exiting\n");
-		
+
 	if (g_mode & VERBOSE) {
 		log_msg("[+] using libevent %s, mechanism: %s\n",
 		event_get_version(), event_get_method());
 	}
-															
+
 	sig_set_handlers();
 	if (db_init(g_database) == ERROR)
 		goto fail;
@@ -121,7 +121,7 @@ fail:
  */
 
 /* pointer on heap used to manage a timer array */
-static struct random_s	**random_tab; 
+static struct random_s	**random_tab;
 
 int	quotes_random_cb(void *unused, int argc, char **argv, char **col_name)
 {
@@ -155,8 +155,8 @@ int	quotes_random_cb(void *unused, int argc, char **argv, char **col_name)
 			continue;
 		}
 
-		/* 
-		 * allocate memory for the channels tring, the timeout, and the 
+		/*
+		 * allocate memory for the channels tring, the timeout, and the
 		 * event structure
 		 */
 

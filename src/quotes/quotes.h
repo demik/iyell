@@ -1,6 +1,6 @@
 /*
  *  quotes.h
- *  iyell/quotes 
+ *  iyell/quotes
  *
  *  Created by Michel DEPEIGE on 24/02/2009.
  *  Copyright (c) 2009 Michel DEPEIGE.

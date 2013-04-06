@@ -1,6 +1,6 @@
 /*
  *  irc.h
- *  
+ *
  *
  *  Created by Michel DEPEIGE on 12/10/07.
  *  Copyright (c) 2007 Michel DEPEIGE.

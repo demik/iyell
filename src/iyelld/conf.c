@@ -1,6 +1,6 @@
 /*
  *  conf.c
- *  iyell 
+ *  iyell
  *
  *  Created by Michel DEPEIGE on 10/10/07.
  *  Copyright (c) 2007 Michel DEPEIGE.
@@ -168,7 +168,7 @@ char	*conf_search(void)
 		if (dup != NULL) {
 			conf = fopen(dup, "r");
 			if (conf) {
-				fclose(conf);	
+				fclose(conf);
 				return dup;
 			}
 			free(dup);

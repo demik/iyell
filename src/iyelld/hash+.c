@@ -1,6 +1,6 @@
 /*
  *  hash_text.c
- *  iyell 
+ *  iyell
  *
  *  Created by Michel DEPEIGE on 02/10/2008.
  *  Copyright (c) 2008 Michel DEPEIGE.
@@ -64,13 +64,13 @@ int	hash_text_insert(hash_t *mem, char *key, char *data)
 
 	if (! mem)
 		return -1;
-	
+
 	/* save new data */
 	new_data = strdup(data);
 	if (new_data == NULL)
 		return -1;
 	hash_data = hash_get(mem, key);
-	
+
 	/* data does not exist, create a new aray as hash value */
 	if (hash_data == NULL) {
 		new_key = strdup(key);
@@ -93,7 +93,7 @@ int	hash_text_insert(hash_t *mem, char *key, char *data)
 			return -1;
 		hash_data[count] = new_data;
 		hash_data[count + 1] = NULL;
-		
+
 		/* find the old allocated key */
 		recs = mem->records;
 		code = strhash(key);
@@ -104,7 +104,7 @@ int	hash_text_insert(hash_t *mem, char *key, char *data)
 				new_key = (char *)recs[i].key;
 			}
 		}
-		
+
 		hash_remove(mem, key);
 		ret = hash_add(mem, new_key, hash_data);
 		if (ret)
@@ -129,7 +129,7 @@ void	hash_text_delete(hash_t *mem, char *key)
 	/* check if we have something */
 	if (! mem)
 		return ;
-	
+
 	/* backup the key pointer for free() */
 	recs = mem->records;
 	code = strhash(key);
@@ -237,7 +237,7 @@ int	hash_text_count_data(hash_t *mem, char *key)
 char	*hash_text_get_first(hash_t *mem, char *key)
 {
 	char	**data;
-	
+
 	if (mem == NULL)
 		return NULL;
 	data = hash_get(mem, key);
@@ -256,7 +256,7 @@ char	*hash_text_get_first(hash_t *mem, char *key)
 int	hash_text_is_false(hash_t *mem, char *key)
 {
 	char	*tmp;
-	
+
 	tmp = hash_text_get_first(mem, key);
 	if (tmp == NULL)
 		return 0;
@@ -277,7 +277,7 @@ int	hash_text_is_false(hash_t *mem, char *key)
 int	hash_text_is_true(hash_t *mem, char *key)
 {
 	char	*tmp;
-	
+
 	tmp = hash_text_get_first(mem, key);
 	if (tmp == NULL)
 		return 0;

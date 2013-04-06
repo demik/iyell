@@ -63,10 +63,10 @@ void		hup_update_modes(conf_t *conf);
  * Compares old and new channels and join/part if needed
  */
 
-static void	hup_check_channels(char **old, char **new) 
+static void	hup_check_channels(char **old, char **new)
 {
 	int     n, o, found;
-	
+
 	/* searching for new channels */
 	for (n = 0; new[n] != NULL; n++) {
 		found = 0;
@@ -80,7 +80,7 @@ static void	hup_check_channels(char **old, char **new)
 			irc_cmd_join(ircout, new[n]);
 		}
 	}
-	
+
 	/* searching for olds channels */
 	for (o = 0; old[o] != NULL; o++) {
 		found = 0;
@@ -94,7 +94,7 @@ static void	hup_check_channels(char **old, char **new)
 			irc_cmd_part(ircout, old[o]);
 		}
 	}
-} 
+}
 
 /*
  * Compare old and new nicknames. Change current nick if needed
@@ -104,7 +104,7 @@ static void	hup_check_nick(char *old, char *new)
 {
 	if (new == NULL) {
 		log_err("[r] warning: no nickname in new configuration, using old one\n");
-		if (hash_text_insert(g_conf.global, "nick", old) == -1) { 
+		if (hash_text_insert(g_conf.global, "nick", old) == -1) {
 			log_err("[r] error: cannot repair bad configuration\n");
 			fatal("[r] exiting");
 		}
@@ -112,7 +112,7 @@ static void	hup_check_nick(char *old, char *new)
 	}
 	if (strcmp(new, old) == 0)
 		return ;
-	
+
 	try_nick_change(-1, -1, ircout);
 }
 
@@ -129,7 +129,7 @@ static void	hup_free_saved_channels(char **tab)
 	}
 	free(tab);
 }
- 
+
 /*
  * on SIGHUP, reload the configuration file
  * join / part channels if needed
@@ -144,18 +144,18 @@ void	hup_handler(int sig, short event, void *arg)
 
 	event = 0;
 	arg = NULL;
-	
+
 	/* print only of we got a signal */
 	if (sig > 0)
 		log_msg("[r] got signal %i, reloading configuration\n", sig);
 
 	/* terminate active hooks */
 	hooks_broadcast_sig(ghook, SIGTERM);
-	
+
 	/* save the old nickname */
 	if ((old_n = hup_save_nick()) == NULL)
 		return ;
-	
+
 	/* save the old channels settings */
 	if ((old_c = hup_save_channels()) == NULL) {
 		free(old_n);
@@ -165,7 +165,7 @@ void	hup_handler(int sig, short event, void *arg)
 	/* reload the configuration */
 	conf_reinit(&g_conf);
 	conf_read(&g_conf, g_file);
-	
+
 	/* get the new settings */
 	new_c = hash_get(g_conf.global, "channels");
 	if (new_c == NULL) {
@@ -174,17 +174,17 @@ void	hup_handler(int sig, short event, void *arg)
 		free(old_n);
 		return ;
 	}
-	
+
 	new_n = hash_text_get_first(g_conf.global, "nick");
-	
+
 	/* Search for diffs in channels, nick, etc... */
-	hup_check_channels(old_c, new_c);	
+	hup_check_channels(old_c, new_c);
 	hup_check_nick(old_n, new_n);
-	
+
 	/* free stuff, etc */
 	hup_free_saved_channels(old_c);
 	free(old_n);
-	
+
 	/* update modes */
 	hup_update_modes(&g_conf);
 }
@@ -207,7 +207,7 @@ static char	**hup_save_channels()
 	char		**tmp;
 	char		**saved;
 	unsigned int	o;
-	
+
 	/* count channels for malloc */
 	tmp = hash_get(g_conf.global, "channels");
 	if (tmp == NULL) {
@@ -218,7 +218,7 @@ static char	**hup_save_channels()
 	saved = malloc((o + 1) * sizeof(char *));
 	if (saved == NULL)
 		return NULL;
-	
+
 	/* duplicate strings in new array */
 	saved[o] = NULL;
 	for (o = 0; tmp[o] != NULL; o++) {
@@ -243,9 +243,9 @@ static char	*hup_save_nick()
 	if (tmp == NULL) { /* shouldn't happen */
 		log_err("[r] cannot commplete SIGHUP: my nickname vanished !\n",
 			strerror(errno));
-		return NULL;	
+		return NULL;
 	}
-	
+
 	saved = strdup(tmp);
 	if (saved == NULL) {
 		log_err("[r] cannot complete SIGHUP: %s\n", strerror(errno));

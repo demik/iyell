@@ -1,6 +1,6 @@
 /*
  *  tools.h
- *  iyell  
+ *  iyell
  *
  *  Created by Michel DEPEIGE on 10/10/07.
  *  Copyright (c) 2007 Michel DEPEIGE.

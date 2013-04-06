@@ -1,6 +1,6 @@
 /*
  *  asprintf.c
- *  
+ *
  *
  *  Created by Michel DEPEIGE on 01/04/08.
  *  2013 lostwave.net.
@@ -26,7 +26,7 @@ int	asprintf(char **strp, const char *format, ...)
 	size = vsnprintf(NULL, 0, format, arg);
 	size++;
 	va_start(arg, format);
-	
+
 	/* linux style: don't set strp to NULL */
 	if (size < 1)
 		return -1;
@@ -37,7 +37,7 @@ int	asprintf(char **strp, const char *format, ...)
 	}
 	ret = vsnprintf(str, size, format, arg);
 	va_end(arg);
-	
+
 	*strp = str;
 	return ret;
 }

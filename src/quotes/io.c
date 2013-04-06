@@ -1,6 +1,6 @@
 /*
  *  io.c
- *  iyell/quotes 
+ *  iyell/quotes
  *
  *  Created by Michel DEPEIGE on 18/02/2009.
  *  Copyright (c) 2009 Michel DEPEIGE.
@@ -70,7 +70,7 @@ void	io_loop()
 		log_err("[i] cannot init buffers: %s\n", strerror(errno));
 		return ;
 	}
-	
+
 	event_set(&ev_in, fileno(stdin), EV_READ, io_read, &ev_in);
 	event_add(&ev_in, NULL);
 
@@ -181,6 +181,6 @@ void	io_toggle_write()
         if (event_del(&ev_out) == -1)
                 log_err("[n] cannot event_del(): %s\n", strerror(errno));
         event_set(&ev_out, fileno(stdout), EV_WRITE, io_write, &ev_out);
-	if (event_add(&ev_out, NULL) == -1) 
+	if (event_add(&ev_out, NULL) == -1)
 		log_err("[n] cannot event_add(): %s\n", strerror(errno));
 }

@@ -1,6 +1,6 @@
 /*
  *  openssl.c
- *  iyell  
+ *  iyell
  *
  *  Created by Michel DEPEIGE on 09/09/2008.
  *  Copyright (c) 2008 Michel DEPEIGE.
@@ -72,7 +72,7 @@ int	ssl_init(void)
 		log_err("[o] cannot init openssl\n");
 		return -1;
 	}
-	
+
 	return NOERROR;
 }
 
@@ -103,7 +103,7 @@ int	ssl_handshake(int fd)
 
 	if (g_mode & VERBOSE)
 		log_msg("[o] performing SSL handshake\n");
-	
+
 	if (! (SSL_set_fd(ssl, fd))) {
 		fprintf(stderr, "[o] unable to set ssl fd\n");
 		SSL_clear(ssl);

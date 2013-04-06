@@ -62,10 +62,10 @@ void	check_id()
 int	init(struct event_base **bot)
 {
 	char	**tmp = NULL;
-	
+
 	conf_init(&g_conf);
 	conf_read(&g_conf, g_file);
-	
+
 	/* check for basic stuff */
 	check_id();
 	tmp = hash_get(g_conf.global, "nick");
@@ -73,7 +73,7 @@ int	init(struct event_base **bot)
 		fprintf(stderr, "[i] no nickname set in configuration, exiting\n");
 		return ERROR;
 	}
-	
+
 	/* check for UDP configuration */
 	tmp = hash_get(g_conf.global, "udp_port");
 	if (tmp == NULL || tmp[0] == NULL) {
@@ -86,7 +86,7 @@ int	init(struct event_base **bot)
 		fprintf(stderr, "[i] no UDP key set, exiting\n");
 		return ERROR;
 	}
-	
+
 	/* check for SSL mode */
 	if (hash_text_is_true(g_conf.global, "ssl"))
 		g_mode |= USE_SSL;
@@ -101,11 +101,11 @@ int	init(struct event_base **bot)
 		printf("[i] using libevent %s, mechanism: %s\n",
 			event_get_version(), event_get_method());
 	}
-	
+
 	/* set handlers */
 	sig_set_handlers();
 
-	/* misc init */	
+	/* misc init */
 	log_init();
 	hooks_init(&ghook);
 	stats_init();
@@ -114,7 +114,7 @@ int	init(struct event_base **bot)
 	timeout.tv_sec = 240;
 	timeout.tv_usec = 42;
 	g_mode |= STARTING;
-	
+
 	log_msg("[i] iyell version %s started.\n", VERSION);
 	return NOERROR;
 }
@@ -139,7 +139,7 @@ static void	init_flags()
 		g_mode |= SYSLOG;
 
 	/* IRC throttling flag */
-	if (hash_text_is_true(g_conf.global, "throttling")) { 
+	if (hash_text_is_true(g_conf.global, "throttling")) {
 		g_mode |= THROTTLING;
 		if (g_mode & VERBOSE)
 			log_msg("[i] throttling irc output\n");

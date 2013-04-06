@@ -36,7 +36,7 @@
 #include "sched.h"
 
 /*
- * For libevent 1.3 
+ * For libevent 1.3
  */
 
 #ifndef HAVE_EVENT_LOOPBREAK
@@ -56,7 +56,7 @@ void	schedule_regain_nick(int seconds)
 void	schedule_nick_change(int seconds)
 {
 	struct timeval	todo_timeout;
-	
+
 	if (seconds <= 0)
 		seconds = 180;
 	if (g_mode & VERBOSE)
@@ -99,7 +99,7 @@ void	schedule_reconnection(int seconds)
 void	schedule_rejoin_after_ban(int seconds)
 {
 	struct timeval	todo_timeout;
-	
+
 	if (seconds <= 0)
 		seconds = 180;
 	if (g_mode & VERBOSE)

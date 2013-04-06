@@ -46,7 +46,7 @@ extern char	*g_type;
 int	main(int argc, char *argv[])
 {
 	int		i = 0;
-	
+
 	/* check args */
 	if (checkopt(&argc, &argv))
 		fprintf(stderr, "[-] warning: trailing arguments\n");
@@ -67,10 +67,10 @@ int	main(int argc, char *argv[])
 	}
 
 	for (i = 0; i < argc; i++) {
-		if (g_mode & DEBUG) 
+		if (g_mode & DEBUG)
 			printf("[+] Sending message: %s\n", argv[i]);
 
-		send_message(argv[i]);	
+		send_message(argv[i]);
 	}
 	return 0;
 }
@@ -153,7 +153,7 @@ int	send_message(char *str)
 }
 
 /*
- * Crypt data and send it to the remote bot specified in 
+ * Crypt data and send it to the remote bot specified in
  * g_address and g_port if appropriate
  *
  * - str = string to send
@@ -169,7 +169,7 @@ int	send_udp(char *str, int len)
 
 	/*
 	 * initialise hints
-	 * AF_UNSPEC is for IPv4 and IPv6 
+	 * AF_UNSPEC is for IPv4 and IPv6
 	 */
 
 	memset(&hints, 0, sizeof(hints));
@@ -254,7 +254,7 @@ int	send_unix(char *str, int len)
 	strncpy(sun.sun_path, g_address, sizeof(sun.sun_path) - 1);
 
 	if (connect(s, (struct sockaddr *)&sun, sizeof(sun)) < 0) {
-		fprintf(stderr, "[-] connect() error: %s\n", strerror(errno));	
+		fprintf(stderr, "[-] connect() error: %s\n", strerror(errno));
 		exit(ERROR);
 	}
 
