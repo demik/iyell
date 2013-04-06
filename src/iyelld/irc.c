@@ -142,6 +142,7 @@ void	irc_switch(struct evbuffer *out, char *str)
 	/* table of functions pointers (codes) */
 	struct s_message irc_codes[] = {
 		{RPL_ENDOFMOTD, irc_send_join},
+		{ERR_NOMOTD, irc_send_join},
 		{ERR_NICKNAMEINUSE, change_nick},
 		{0, 0}
 	};
