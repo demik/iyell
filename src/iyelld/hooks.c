@@ -477,7 +477,12 @@ static	char	**hooks_mangle_oneshot_argv(char **exec, int argc, char **argv, char
 
 	/* add who + where to argc */
 	tmp[e + 0] = who;
-	tmp[e + 1] = where;
+
+	/* in query, where is NULL use an empty string */
+	if (where == NULL)
+		tmp[e + 1] = "";
+	else
+		tmp[e + 1] = where;
 
 	for (i = 1; i < (unsigned int)argc; i++) {
 		tmp[e + i + 1] = argv[i];
