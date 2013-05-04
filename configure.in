@@ -18,7 +18,7 @@ dnl Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  U
 AC_INIT(src/iyelld/main.c)
 
 PACKAGE_NAME=iyell
-PACKAGE_VERSION=0.7.0
+PACKAGE_VERSION=0.7.2
 
 AM_INIT_AUTOMAKE($PACKAGE_NAME, $PACKAGE_VERSION)
 

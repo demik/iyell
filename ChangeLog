@@ -1,4 +1,7 @@
 ### 0.7.2
+- fixed potential long nickname (len > 4096) buffer overflow
+- fixed a bug with hooks args in query
+- github upload
 
 ### 0.7.1
 - fixed an error that could trigger SEGV in cmd_check_irc_msg()
