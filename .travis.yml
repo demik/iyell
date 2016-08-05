@@ -2,6 +2,22 @@ install: make get-deps
 
 language: c
 
-compiler:
-  - clang
-  - gcc
+# Use the faster container-based infrastructure.
+sudo: false
+
+before_script: ./autogen.sh
+script: ./configure --enable-debug --enable-quotes && make
+
+addons:
+  apt:
+    packages:
+      - libevent-dev
+      - libsqlite3-dev
+      - libssl-dev
+
+matrix:
+   include:
+      - compiler: gcc
+        os: linux
+      - compiler: clang
+        os: linux
