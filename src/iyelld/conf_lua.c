@@ -55,7 +55,7 @@ int	conf_lua_read(char *file, conf_t *conf)
 {
 	lua_State *L;
 
-	L = lua_open();
+	L = luaL_newstate();
 	luaL_openlibs(L);
 
 	if (luaL_loadfile(L, file) || lua_pcall(L, 0, 0, 0)) {
