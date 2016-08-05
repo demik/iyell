@@ -19,6 +19,7 @@ matrix:
         os: linux
       - compiler: clang
         os: osx
+	osx_image: xcode8
 
 # brew stuff for macOS
 before install:
