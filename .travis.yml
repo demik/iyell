@@ -1,11 +1,8 @@
-install: make get-deps
-
 language: c
 
 # Use the faster container-based infrastructure.
 sudo: false
 
-before_script: ./autogen.sh
 script: ./configure --enable-debug --enable-quotes && make
 
 addons:
