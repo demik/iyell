@@ -22,11 +22,14 @@ matrix:
 	osx_image: xcode8
 
 # brew stuff for macOS
-before install:
+install:
+  - echo '::: $TRAVIS_OS_NAME:' $TRAVIS_OS_NAME
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          	       ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install libevent lua sqlite ; fi
 
 # compile script
 before_script: ./autogen.sh
-script: ./configure --enable-debug --enable-lua --enable-quotes && make
+script: 
+  - ./configure --enable-debug --enable-lua --enable-quotes
+  - make
 
