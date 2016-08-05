@@ -241,14 +241,11 @@ void	info_forward(struct evbuffer *out, char *type, char *message)
 
 /*
  * forward message to recipient
- * if in bitlbee mode, assume recipient = &bitlbee
  * and message - recipient: message
  */
 
 void	info_direct_forward(struct evbuffer *out, char *type, char *message)
 {
-        char    *tmp;
-
 	if (! hash_text_is_true(g_conf.global, "allow_direct")) {
 		log_msg("[i] direct recipient not allowed, dropping\n");
 		return ;
@@ -262,16 +259,6 @@ void	info_direct_forward(struct evbuffer *out, char *type, char *message)
 	if (g_mode & VERBOSE)
 		printf("[i] forwarding message \"%s\" to recipient \"%s\"\n",
 	        message, type);
-
-	/* bitlbee mode */
-	if (hash_text_is_true(g_conf.global, "irc_bitlbee")) {
-		if (asprintf(&tmp, "%s: %s", type, message) == -1) {
-			log_err("[i] asprintf() error: %s\n", strerror(errno));
-			return ;
-		}
-		irc_cmd_privmsg(out, "&bitlbee", tmp);
-		free(tmp);
-	}
 
 	/* standard mode */
 	irc_cmd_privmsg(out, type, message);

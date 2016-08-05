@@ -107,7 +107,7 @@ int	conf_lua_get_data(lua_State *L, char *name, hash_t *hash)
 int	conf_lua_get_globals(lua_State *L, hash_t *hash)
 {
 	char	*keys[] = {
-		"allow_direct", "allow_private_cmd", "bitlbee", "channels", "color",
+		"allow_direct", "allow_private_cmd", "channels", "color",
 		"nick",	"perform", "offset", "pass", "port", "quit_message", "realname",
 		"server", "ssl", "sync_message", "sync_notice", "syslog", "throttling",
 		"hooks", "syslog_listener", "syslog_port", "syslog_silent_drop",

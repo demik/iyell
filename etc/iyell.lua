@@ -7,7 +7,6 @@ server = "irc.pouet.foo"
 port = "7000"
 ssl = "no"
 -- pass = "secret"
--- bitlbee = "no"
 throttling = "no"
 
 -- IRC settings
