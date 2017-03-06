@@ -40,11 +40,7 @@ extern int	optind, opterr, optopt;
 char		*g_file;
 unsigned int	g_mode;
 
-#ifdef HAVE_LIBLUA
-#define	OPTION_STRING	"bc:dlvVh"
-#else
 #define OPTION_STRING   "bc:dvVh"
-#endif
 
 /* check arg, set variables as necessary, and return */
 int	checkopt(int argc, char **argv)
@@ -81,9 +77,6 @@ int	checkopt(int argc, char **argv)
 				break;
 			case 'd':
 				g_mode |= DEBUG;
-				break;
-			case 'l':
-				g_mode |= LUA;
 				break;
 			case 'h':
 				usage();

@@ -97,7 +97,7 @@ extern conf_t		g_conf;
 #define	FLOOD		(1 << 11)
 #define THROTTLING	(1 << 12)
 #define	THROTTLED	(1 << 13)
-#define	LUA		(1 << 14)
+
 #define	HOOKS		(1 << 15)
 #define SL3164_SILENT	(1 << 16)
 #define COLOR		(1 << 17)

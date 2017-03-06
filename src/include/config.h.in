@@ -42,9 +42,6 @@
 /* Define to 1 if you have the `event' library (-levent). */
 #undef HAVE_LIBEVENT
 
-/* Define to 1 if you have the `lua' library (-llua). */
-#undef HAVE_LIBLUA
-
 /* Define to 1 if you have the `sqlite3' library (-lsqlite3). */
 #undef HAVE_LIBSQLITE3
 
