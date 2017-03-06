@@ -4,7 +4,6 @@ iyelld_SOURCES =		\
 		cmd.c		\
 		conf.c		\
 		conf_ini.c	\
-		conf_lua.c	\
 		ctcp.c		\
 		info.c		\
 		init.c		\

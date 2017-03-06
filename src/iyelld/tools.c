@@ -60,9 +60,6 @@ int	checkopt(int argc, char **argv)
 		{"background", 0, 0, 'b'},
 		{"config", 1, 0, 'c'},
 		{"debug", 0, 0, 'd'},
-#ifdef HAVE_LIBLUA
-		{"lua", 0, 0, 'l'},
-#endif
 		{"help", 0, 0, 'h'},
 		{"version", 0, 0, 'V'},
 		{"verbose", 0, 0, 'v'},
@@ -120,9 +117,6 @@ void	usage(void)
 	printf("\t -c --config f\t use f as configuration file.\n");
 	printf("\t -d --debug\t debug mode.\n");
 	printf("\t -h --help\t this screen.\n");
-#ifdef HAVE_LIBLUA
-	printf("\t -l --lua\t lua configuration mode.\n");
-#endif
 	printf("\t -v --verbose\t verbose mode.\n");
 	printf("\t -V --version\t show version and exit.\n");
 	exit(NOERROR);

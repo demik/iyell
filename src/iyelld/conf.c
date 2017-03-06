@@ -42,7 +42,6 @@
 /* prototypes */
 char	*conf_search(void);
 int	conf_ini_read(FILE *conf, conf_t *mem);
-int	conf_lua_read(char *conf, conf_t *mem);
 
 /*
  *	Remove the current configuration from memory
@@ -236,12 +235,7 @@ int	conf_read(conf_t *mem, char *file)
 	if (g_mode & VERBOSE)
 		log_msg("[c] using configuration file: %s\n", file);
 
-#ifdef HAVE_LIBLUA
-	if (g_mode & LUA)
-		error = conf_lua_read(file, mem);
-	else
-#endif
-		error = conf_ini_read(conf, mem);
+	error = conf_ini_read(conf, mem);
 	fclose(conf);
 	free(found);
 	return 0;
