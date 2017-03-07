@@ -22,7 +22,7 @@ matrix:
 	osx_image: xcode8.2
 
 # brew stuff for macOS
-install:
+before_install:
   - echo '::: $TRAVIS_OS_NAME:' $TRAVIS_OS_NAME
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install libevent sqlite	; fi
