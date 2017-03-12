@@ -26,7 +26,8 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew unlink libevent ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install libevent sqlite	openssl ; fi
-  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew link openssl ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew link --force openssl ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then export CPPFLAGS=-I$(brew --prefix openssl)/include; export LDFLAGS=-L$(brew --prefix openssl)/include ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then openssl version ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sqlite3 --version ; fi
 
