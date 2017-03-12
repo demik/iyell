@@ -23,7 +23,6 @@ matrix:
 
 # brew stuff for macOS
 before_install:
-  - echo '::: $TRAVIS_OS_NAME:' $TRAVIS_OS_NAME
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update ; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew install libevent sqlite	; fi
   - if [ "$TRAVIS_OS_NAME" = "osx" ]; then sqlite3 --version ; fi
