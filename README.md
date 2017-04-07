@@ -1,6 +1,9 @@
 # iyell
 
-## Installation
+### Status
+[![Build Status](https://travis-ci.org/demik/iyell.svg?branch=master)](https://travis-ci.org/demik/iyell)
+
+### Installation
 Just do the usual ./configure stuff
 
 ``` bash
